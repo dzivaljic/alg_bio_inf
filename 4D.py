@@ -1,0 +1,57 @@
+
+def get_amino_acid_mass():
+    mass = {
+        "G": 57,
+        "A": 71,
+        "S": 87,
+        "P": 97,
+        "V": 99,
+        "T": 101,
+        "C": 103,
+        "I": 113,
+        "L": 113,
+        "N": 114,
+        "D": 115,
+        "K": 128,
+        "Q": 128,
+        "E": 129,
+        "M": 131,
+        "H": 137,
+        "F": 147,
+        "R": 156,
+        "Y": 163,
+        "W": 186,
+    }
+
+    return mass
+
+def get_all_combinations_worker(mass,aa_masses,counter):
+    if mass in counter:
+        return counter[mass]
+    if mass<0:
+        return 0
+    if mass==0:
+        return 1
+    
+    counter[mass]=0
+    for x in aa_masses:
+        counter[mass]+=get_all_combinations_worker(mass-x, aa_masses, counter)
+        
+    return counter[mass]
+    
+
+def all_combinations(mass):
+    aa_masses=set(get_amino_acid_mass().values())
+    counter={}
+    return get_all_combinations_worker(mass, aa_masses, counter)
+    
+
+
+if __name__ == "__main__":
+
+    
+
+    mass = int(input())
+    res=all_combinations(mass)
+    
+    print(res)
